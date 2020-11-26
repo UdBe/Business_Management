@@ -9,7 +9,7 @@ def mainmenu():
     print("3. Security Vault  ")
     print("4. View Transaction History ")
     print("5. Exit \n ")
-    choice = int(input("Enter Choice: "))
+    choice = int(input( "Enter Choice: "))
 
     if choice == 1: 
         pass

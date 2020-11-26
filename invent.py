@@ -1,5 +1,14 @@
 import mysql.connector as sqlcon
 
+mycon = sqlcon.connect(
+    host = 'localhost',
+    user = ' root ',
+    password =  'root' ,
+    database = 'project'
+)
+
+mycur = mycon.cursor()
+
 def cont():
     ch = input("\nPress any key to continue: ")
     askmenu()
@@ -82,12 +91,10 @@ def additem():
         print("Invalid Choice Entered. ")
         askmenu()
 
-def updateitem():
-    
-    def selectitem():
+def selectitem():
         print("\n1. Name")
         print("2. Price")
-        print("3. Quantity")    
+        print("3. Quantity") 
         choice = int(input("Enter Chocie: "))
         if choice == 1:
             return "name"
@@ -97,9 +104,10 @@ def updateitem():
             return "quantity"
         else:
             print("Invalid Option Selected")            
-            selectitem()
+            selectitem()        
 
-
+def updateitem():
+    
     print("\nSelect item by: ")
     ch1 = selectitem()
     curval = str(input("Enter current value: ")).strip()  
@@ -108,37 +116,80 @@ def updateitem():
     ch2 = selectitem()       
     newval = str(input("Enter new value: ")).strip()
 
-    # try:
-            
-    if ch1 == "name" and ch2 == "name": 
-        mycur.execute(("update inventory set {} = '{}' where {} = '{}' ").format(ch2,newval,ch1,curval))
-    elif ch1 == "name":
-        mycur.execute(("update inventory set {} = {} where {} = '{}' ").format(ch2,int(newval),ch1,curval))
-    elif ch2 == "name":
-        mycur.execute(("update inventory set {} = '{}' where {} = {} ").format(ch2,newval,ch1,int(curval)))
-    else:
-        mycur.execute(("update inventory set {} = {} where {} = {} ").format(ch2,int(newval),ch1,int(curval)))        
+    try:
+                    
+        if ch1 == "name" and ch2 == "name": 
+            mycur.execute(("update inventory set {} = '{}' where {} = '{}' ").format(ch2,newval,ch1,curval))
+        elif ch1 == "name":
+            mycur.execute(("update inventory set {} = {} where {} = '{}' ").format(ch2,int(newval),ch1,curval))
+        elif ch2 == "name":
+            mycur.execute(("update inventory set {} = '{}' where {} = {} ").format(ch2,newval,ch1,int(curval)))
+        else:
+            mycur.execute(("update inventory set {} = {} where {} = {} ").format(ch2,int(newval),ch1,int(curval)))        
 
-    mycon.commit()
-    print("Item updated successfully")
-    cont()
+        mycon.commit()
+        print("Item updated successfully")
+        cont()
 
-    # except:
-    #     print("Action Failed")
-    #     updateitem()
+    except:
+        print("Action Failed")
+        updateitem()
 
 def delitem():
-    pass
-    # name,quantity
+    myvar = ""
+    print("\nSelect data by: ")
+    print("1. Name")
+    print("2. Price")
+    print("3. Quantity") 
+    print("4. All Items")
+    choice = input("Enter Chocie: ")
+    if choice == '1':
+        myvar = "name"
+    elif choice == '2':
+        myvar = "price"
+    elif choice == '3':
+        myvar = "quantity" 
+    elif choice == '4':
+        myvar = "all"
+    else:
+        print("Invalid Option Selected")                
 
-
-mycon = sqlcon.connect(
-    host = 'localhost',
-    user = ' root ',
-    password =  'root' ,
-    database = 'project'
-)
-mycur = mycon.cursor()
+    try: 
+        if myvar == "all":
+            a = input("The following action will delete all items from inventory. Are you sure you want to continue? (y/n): ")
+            if a in 'Yy':
+                mycur.execute("delete from inventory")
+                mycon.commit()
+                print("Inventory Cleared Successfully")
+                cont()
+            elif a in 'Nn':
+                print("No items affected.")
+                cont()
+            else:
+                print("Invalid choice") 
+                delitem()
+        
+        if choice in '1234':
+            ival = str(input("Enter Value: ")).strip()
+            if choice == "1":
+                mycur.execute(("delete from inventory where name = '{}' ").format(ival))
+                mycon.commit()
+                print("Item(s) deleted successfully.")
+                cont()
+            elif choice == "2":
+                mycur.execute(("delete from inventory where price = {} ").format(int(ival)))
+                mycon.commit()
+                print("Item(s) deleted successfully.")
+                cont()
+            elif choice == "3":
+                mycur.execute(("delete from inventory where quantity = {} ").format(int(ival)))
+                mycon.commit()
+                print("Item(s) deleted successfully.")
+                cont()
+            
+    except:
+        print("Action not completed. ")
+        delitem()
 
 def askmenu():
     print(" \n Welcome to Inventory \n")
