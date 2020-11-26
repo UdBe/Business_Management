@@ -83,8 +83,49 @@ def additem():
         askmenu()
 
 def updateitem():
-    pass
-    # name,category_to_be_updated, newvalue
+    
+    def selectitem():
+        print("\n1. Name")
+        print("2. Price")
+        print("3. Quantity")    
+        choice = int(input("Enter Chocie: "))
+        if choice == 1:
+            return "name"
+        elif choice == 2:
+            return "price"
+        elif choice == 3:
+            return "quantity"
+        else:
+            print("Invalid Option Selected")            
+            selectitem()
+
+
+    print("\nSelect item by: ")
+    ch1 = selectitem()
+    curval = str(input("Enter current value: ")).strip()  
+
+    print("\nSelect category to be updated: ")
+    ch2 = selectitem()       
+    newval = str(input("Enter new value: ")).strip()
+
+    # try:
+            
+    if ch1 == "name" and ch2 == "name": 
+        mycur.execute(("update inventory set {} = '{}' where {} = '{}' ").format(ch2,newval,ch1,curval))
+    elif ch1 == "name":
+        mycur.execute(("update inventory set {} = {} where {} = '{}' ").format(ch2,int(newval),ch1,curval))
+    elif ch2 == "name":
+        mycur.execute(("update inventory set {} = '{}' where {} = {} ").format(ch2,newval,ch1,int(curval)))
+    else:
+        mycur.execute(("update inventory set {} = {} where {} = {} ").format(ch2,int(newval),ch1,int(curval)))        
+
+    mycon.commit()
+    print("Item updated successfully")
+    cont()
+
+    # except:
+    #     print("Action Failed")
+    #     updateitem()
 
 def delitem():
     pass
