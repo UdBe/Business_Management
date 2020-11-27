@@ -76,9 +76,11 @@ def additem():
 
     mycur.execute("select sno from inventory")
     mylist = mycur.fetchall()
-    mylist2 = mylist[len(mylist)-1]
-    mysno = mylist2[len(mylist2)-1] + 1
-
+    if len(mylist) == 0:
+        mysno = 1
+    else:    
+        mylist2 = mylist[len(mylist)-1]
+        mysno = mylist2[len(mylist2)-1] + 1
     mycur.execute(("insert into inventory values({} , '{}' , {}, {} )").format(mysno,iname,iprice,iqty))
     mycon.commit()
 

@@ -12,7 +12,7 @@ def mainmenu():
     choice = int(input( "Enter Choice: "))
 
     if choice == 1: 
-        pass
+        billing.genbill()
 
     elif choice == 2: 
         invent.askmenu()

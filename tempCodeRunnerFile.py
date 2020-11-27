@@ -7,8 +7,8 @@ mycon = sqlcon.connect(
 )
 
 mycur = mycon.cursor()
-i = input("")
-mycur.execute(("select quantity from inventory where name = '{}'").format(str(i).strip()))
-mylist = mycur.fetchone()
 
-print(mylist[0])
+mycur.execute("select name from inventory")         
+mylist = mycur.fetchone()
+print(mylist)
+
