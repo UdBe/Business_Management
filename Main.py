@@ -1,5 +1,6 @@
 import invent
 import billing
+import transact
 
 def mainmenu():
 
@@ -13,6 +14,7 @@ def mainmenu():
 
     if choice == 1: 
         billing.genbill()
+        mainmenu()
 
     elif choice == 2: 
         invent.askmenu()
@@ -22,7 +24,8 @@ def mainmenu():
         pass
 
     elif choice == 4: 
-        pass
+        transact.mainmenu()
+        mainmenu()
     
     elif choice == 5: 
         pass

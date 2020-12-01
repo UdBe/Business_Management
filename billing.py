@@ -1,4 +1,5 @@
 import mysql.connector as sqlcon
+import transact
 import datetime
 
 mycon = sqlcon.connect(
@@ -14,6 +15,7 @@ ilist = []
 snolist = [1]
 qtylist = []
 pricelist = [] 
+
 
 def findprice(iname):
     mycur.execute(("select price from inventory where name = '{}'").format(iname))
@@ -37,7 +39,7 @@ def checkitemqty(var1,var2):
     mycur.execute(("select quantity from inventory where name = '{}'").format(str(var1).strip()))
     mylist = mycur.fetchone()
     if var2 <= mylist[0]:
-        qtylist.append(var2)
+        qtylist.append(mylist[0])
         return True
     else:
         return False
@@ -62,7 +64,7 @@ def printitems():
 
 def updateinventory(name,qty):
     
-    myqty = int(qtylist[0])
+    myqty = int(qtylist[0]) - qty
     mycur.execute(("update inventory set quantity = {} where name = '{}' ").format(myqty,name))
     mycon.commit()
     qtylist.pop()
@@ -88,7 +90,7 @@ def printbill(name,date,time):
     print("Email: XYZ@abc.com")
     print("Corporate office: A-12, PQR colony, New Delhi")
     print("-----------------------------------------------------")
-
+    transact.addtrans(date,time,name,totalprice)
 
 
 def genbill():
@@ -141,4 +143,7 @@ def genbill():
 
     cname = str(input("\nEnter Customer Name: "))
     addnewitems()
+
+    myvar = input("Press Enter to continue. ")
+    pass
        
