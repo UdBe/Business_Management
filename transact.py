@@ -21,7 +21,7 @@ def addtrans(date,time,cname,totalval):
     mycon.commit()
 
 def cont():
-    ch = input("\nPress any key to continue: ")
+    input("\nPress Enter to continue: ")
     mainmenu()
 
 def mainmenu():

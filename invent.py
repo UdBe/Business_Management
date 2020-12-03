@@ -10,7 +10,7 @@ mycon = sqlcon.connect(
 mycur = mycon.cursor()
 
 def cont():
-    ch = input("\nPress any key to continue: ")
+    input("\nPress Enter to continue: ")
     askmenu()
 
 def viewitem():
