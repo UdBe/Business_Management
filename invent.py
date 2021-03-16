@@ -81,9 +81,16 @@ def additem():
     else:    
         mylist2 = mylist[len(mylist)-1]
         mysno = mylist2[len(mylist2)-1] + 1
-    mycur.execute(("insert into inventory values({} , '{}' , {}, {} )").format(mysno,iname,iprice,iqty))
-    mycon.commit()
 
+    try: 
+
+        mycur.execute(("insert into inventory values({} , '{}' , {}, {} )").format(mysno,iname,iprice,iqty))
+        mycon.commit()
+
+    except: 
+        print("Error Adding Item. Item might already exist. Try Again. ")
+        askmenu()
+        
     ch = input("\nItem Added Successfully. Add more items? (y/n): ")
     if ch in "Yy":
         additem()
@@ -203,16 +210,15 @@ def askmenu():
     ch = int(input("Enter Choice: "))
 
     if ch == 1: 
-        viewitem()
-        
-    if ch == 2: 
-        additem()
-        
-    if ch == 3: 
+        viewitem()   
+    elif ch == 2: 
+        additem()  
+    elif ch == 3: 
         updateitem()
-        
-    if ch == 4: 
-        delitem()
-        
-    if ch == 5: 
+    elif ch == 4: 
+        delitem() 
+    elif ch == 5: 
         pass
+    else:
+        print("Invalid Choice. Try again. ")
+        askmenu()
