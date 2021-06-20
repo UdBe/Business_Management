@@ -147,20 +147,3 @@ def genbill():
     input("Press Enter to continue. ")
     pass
        
-# Akshat
-# Angad
-# Aryan Aggrawal
-# Aryan Mudgal
-# Aryan Malhotra
-# Dhruv Sharma
-# Dhruv Gupta
-# Gunveer
-# Hardik
-# Khushi 
-# Paramraj
-# Manit
-# Shashwat
-# Sidhant
-# Sidharth
-# Yash Sethi
-# Garvit
